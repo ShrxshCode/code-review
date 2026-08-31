@@ -48,7 +48,7 @@ but it is recommended that you use one of these two.
 - Create a private repo (important: make sure it is private) in your
    own git hub acccount. Place the fixed files (including the Makefile)
    and issues.txt in your repo.
-- Give read permission to the TAs and myself. See syllabus for our github ids (Fall 2025 github ids: jbronyah and neisty). To give read permission,
+- Give read permission to the TA and myself. (github ids: jbronyah and neisty). To give read permission,
    select settings->Collaborators->Add People in your repo.
 - On Canvas, turn in a link to your repository.
 
