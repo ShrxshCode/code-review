@@ -1,0 +1,154 @@
+Shrish Sharma
+COSC 340 - Assignment 6: Code Review
+issues.txt
+
+
+main.h
+
+main.h: no #define guard. Add #ifndef CODE_REVIEW_MAIN_H, #define, and
+    #endif  /* CODE_REVIEW_MAIN_H */ at the end.
+main.h: no comment at the top of the file saying what the file is for.
+main.h: uses FILE but never includes <stdio.h>. Add the include.
+main.h lines 1, 5, 8: comments are not capitalized sentences with periods.
+main.h lines 2, 3, 6, 9: function names should be MixedCase. base64_encode
+    to Base64Encode, base64_decode to Base64Decode, encode to Encode,
+    decode to Decode.
+main.h lines 2, 3, 6, 9: prototypes should not have variable names, just
+    the types.
+main.h lines 6, 9: extra space between the function name and the opening
+    parenthesis. Remove it.
+
+
+main.c
+
+main.c line 10: uses // comment style but the rest of the file uses /* */.
+    Pick one and be consistent. Also needs to be a capitalized sentence
+    with a period.
+main.c line 11: return type should be on its own line above the function
+    name, and the { should be on the next line.
+main.c line 11: function name should be MixedCase. usage to Usage.
+main.c line 11: empty parameter list should be (void), not ().
+main.c line 15: multi-line comment format is wrong. The /* and the */ each
+    need to be on their own line.
+main.c line 18: extra space between main and the opening parenthesis.
+main.c line 31: comment is not a complete sentence and the grammar is off.
+main.c line 33 and following: block is indented 3 spaces, should be 4.
+main.c line 34: exit(0) on a usage error. Error paths should exit non-zero.
+main.c line 40: line has nothing on it but trailing whitespace.
+main.c line 47: extra spaces before the parentheses in the fstat and
+    fileno calls.
+main.c line 51 and following: case labels should be indented 4 spaces and
+    the case bodies 8 spaces.
+main.c lines 53, 57: function names should be MixedCase. encode to Encode,
+    decode to Decode.
+main.c line 65: the { for the for loop should be on the same line as the
+    for.
+main.c line 69: the { for the if should be on the same line as the if.
+main.c line 70: use '\0' for the null character instead of 0.
+main.c line 76: switch is missing a default case.
+main.c line 77 and following: case labels should be indented 4 spaces and
+    the case bodies 8 spaces.
+main.c lines 78, 82: function names should be MixedCase. base64_encode to
+    Base64Encode, base64_decode to Base64Decode.
+main.c line 88: "Exit 0 on success" is an obvious comment and should be
+    deleted.
+main.c line 89: extra space between exit and the opening parenthesis.
+main.c: if the type argument is not "uu" or "base64" the program does
+    nothing and still exits 0. Added an else that prints usage and exits 1.
+
+
+Base64.c
+
+Base64.c: filename has capital letters. Rename to base64.c and update the
+    Makefile to match.
+Base64.c: whole file is indented 2 spaces. Should be 4 spaces everywhere.
+Base64.c line 11 and following: the continuation lines in the copyright
+    comment are indented inconsistently.
+Base64.c line 39: line is longer than 80 characters. Wrap the string onto
+    the next line.
+Base64.c line 41: comment is not a capitalized sentence with a period, and
+    has trailing whitespace.
+Base64.c line 43: function name should be MixedCase. pos to Pos.
+Base64.c line 43: the { should be on the line after the function name.
+Base64.c line 54: multi-line comment format is wrong. The /* needs to be on
+    its own line.
+Base64.c line 54: comment is not a capitalized sentence and "chunck" is
+    misspelled.
+Base64.c line 58: function name should be MixedCase. base64_encode to
+    Base64Encode.
+Base64.c line 70: "i = 0;" is pointless because the for loop right after it
+    sets i to 0 anyway.
+Base64.c line 89: use '\0' for the null character instead of 0.
+Base64.c line 93: DECODE_ERROR is defined in the middle of the file. Move
+    it up to the top with the other includes and defines.
+Base64.c line 96: comment "Decode the tokens." does not really explain what
+    the function does.
+Base64.c line 98: function name should be MixedCase. token_decode to
+    TokenDecode.
+Base64.c line 98: parameter name TokenString is mixed case. Variables
+    should be lowercase with underscores, so token_string.
+Base64.c line 103: no blank line between the declarations and the code.
+Base64.c line 122: comment misspells "Decoode" and is not a complete
+    sentence.
+Base64.c line 125: function name should be MixedCase. base64_decode to
+    Base64Decode.
+Base64.c line 131: no spaces around the * and / operators, and the cast is
+    written differently than the one on line 65.
+Base64.c line 131: the return value of malloc is never checked for NULL.
+Base64.c lines 134, 135: uses bare "unsigned" instead of "unsigned int".
+Base64.c line 137: returns 0 from a function that returns a pointer. Should
+    return NULL.
+Base64.c: Base64Decode never null terminates the string it returns, but
+    main.c prints it with %s. Left the logic alone but noting it here.
+
+
+uu.c
+
+uu.c line 38: includes <memory.h>, which is not standard. Should be
+    <string.h> since the file uses strncmp, strlen, strcmp, and memcpy.
+uu.c line 51: function name should be MixedCase. encode to Encode.
+uu.c line 52: extra space between the function name and the opening
+    parenthesis.
+uu.c line 54 and following: uses the register keyword, which the style
+    guide says not to use.
+uu.c line 59: the { for the while loop is on its own line indented 6
+    spaces. It should be on the same line as the while.
+uu.c line 65: the { for the for loop should be on the same line as the for.
+uu.c line 66 and following: for loop body is indented 8 spaces, should be
+    12.
+uu.c line 86: closing brace of the for loop is indented 10 spaces, should
+    be 8.
+uu.c line 90: closing brace of the while loop is indented 6 spaces, should
+    be 4.
+uu.c line 96 and following: this ferror(fp) block is an exact copy of the
+    one on line 91. Delete it.
+uu.c line 106: trailing whitespace right after the opening /*.
+uu.c line 107: comment "uudecode a file." should be a proper sentence that
+    explains what the function does and what it returns.
+uu.c line 109: function name should be MixedCase. decode to Decode.
+uu.c line 110: extra space between the function name and the opening
+    parenthesis.
+uu.c line 119: comment is not a capitalized sentence with a period.
+uu.c line 126: the while of the do-while should be on the same line as the
+    closing brace, like } while (...);
+uu.c line 131: comment is not a capitalized sentence with a period.
+uu.c line 132: spaces between the parentheses and the condition in the if.
+uu.c line 149: comment is not a capitalized sentence with a period.
+uu.c line 158: comment is not a capitalized sentence with a period.
+uu.c line 178: if statement has no braces around the break.
+uu.c line 180: the break is not indented under the if.
+uu.c line 191: else should be on the same line as the closing brace, like
+    } else {
+uu.c line 214: "return (0);" has unnecessary parentheses. Should be
+    "return 0;".
+uu.c: every function call has a space before the opening parenthesis.
+    Removed throughout the file.
+uu.c: lots of blank lines have trailing whitespace on them.
+
+
+Makefile
+
+Makefile lines 6, 7, 12, 13, 18: references to Base64.c and Base64.o need
+    to change to base64.c and base64.o after the file rename.
+Makefile line 6: base64.o does not list main.h as a dependency even though
+    base64.c includes it.
